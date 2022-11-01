@@ -3,8 +3,9 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 const app = require('../app')
 const User = require('../models/User.model')
+const { isLoggedIn, isLoggedOut } = require('../middleware/route-guard.js');
 
-router.get("/signup", (req, res) => {
+router.get("/signup", isLoggedOut, (req, res) => {
     res.render("auth/signup")
     console.log("success")
 })
@@ -24,7 +25,7 @@ router.post("/signup", async (req, res) => {
     }
 })
 
-router.get("/login", (req, res) => {
+router.get("/login", isLoggedOut, (req, res) => {
     res.render("auth/login")
 })
 
